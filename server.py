@@ -23,8 +23,8 @@ class MyDatastoreServicer(datastore_pb2.DatastoreServicer):
         while(1):
             for i in li:
                 print(i.key)
-                yield i
-                li = li[1:] 
+                yield i 
+		li = li[1:]
     @decorator
     def put(self, request, context):
         
@@ -37,10 +37,11 @@ class MyDatastoreServicer(datastore_pb2.DatastoreServicer):
 
     def get(self, request, context):
         print("get")
-        X = request.key
-        value = self.db.get(X)
+        X = request.key.encode()
+        value = self.db.get(X).decode()
+
         print(value)
-        return datastore_pb2.Response(key=X,value=value)
+        return datastore_pb2.Response(key=request.key,value=value)
 
 def run(host, port):
     '''
