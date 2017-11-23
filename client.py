@@ -17,9 +17,10 @@ class DatastoreClient():
 
     def put(self, key, value):
         return self.stub.put(datastore_pb2.Request(key=key,value=value))
+   
     def get(self, key):
         return self.stub.get(datastore_pb2.Request2(key=key))
-
+    
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("host", help="display a square of a given number")
@@ -34,9 +35,6 @@ def main():
     print("## GET Request: key = " + resp.key)
     r = client.get(resp.key) 
     print("## GET Response: value = " + r.value) 
-
-
-
 
 
 if __name__ == "__main__":
