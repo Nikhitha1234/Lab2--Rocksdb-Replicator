@@ -9,13 +9,13 @@ import argparse
 import rocksdb
 
 PORT = 3000
-
+db1 = rocksdb.DB("lab2.db", rocksdb.Options(create_if_missing=True))
 class DatastoreClient():
     
     def __init__(self, host='0.0.0.0', port=PORT):
         self.channel = grpc.insecure_channel('%s:%d' % (host, port))
         self.stub = datastore_pb2.DatastoreStub(self.channel)
-        self.db1 = rocksdb.DB("lab2.db", rocksdb.Options(create_if_missing=True))
+        
 
     def replicator(self):
         return self.stub.replicator(datastore_pb2.Request1())
@@ -32,7 +32,7 @@ def main():
         k = i.key.encode('utf-8')
         l = i.value.encode('utf-8') 
         print(k,l)
-        self.db1.put(k,l)
+        db1.put(k,l)
     
 
 if __name__ == "__main__":
